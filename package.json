@@ -156,17 +156,15 @@
         "eslint-plugin-jest": "^21.12.2",
         "eslint-plugin-react": "^7.7.0",
         "file-loader": "^1.1.8",
+        "html-webpack-plugin": "webpack-contrib/html-webpack-plugin",
         "img-loader": "^2.0.1",
         "jest": "^22.4.0",
         "lodash-es": "^4.17.5",
         "open-browser-webpack-plugin": "^0.0.5",
         "url-loader": "^0.6.2",
+        "webpack": "^4.0.0-beta.2",
         "webpack-bundle-analyzer": "^2.10.0",
-        "webpack-notifier": "^1.5.1",
-        "html-webpack-plugin": "webpack-contrib/html-webpack-plugin",
-        "tapable": "1.0.0-beta.5",
-        "webpack": "^4.0.0-beta.1",
         "webpack-cli": "^2.0.6",
-        "webpack-dev-server": "^3.0.0-beta.1"
+        "webpack-notifier": "^1.5.1"
     }
 }
