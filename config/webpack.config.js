@@ -5,7 +5,7 @@ const CaseSensitivePlugin = require('case-sensitive-paths-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerSunburstPlugin = require('webpack-bundle-analyzer-sunburst').BundleAnalyzerPlugin;
 const NotifierPlugin = require('webpack-notifier');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
@@ -69,19 +69,6 @@ const config = module.exports = {
             }]
         }],
     },
-    optimization: {
-        sideEffects: false,
-        splitChunks: {
-            cacheGroups: {
-                vendor: {
-                    chunks: "initial",
-                    test: path.resolve(__dirname, "node_modules"),
-                    name: "vendor",
-                    enforce: true
-                }
-            }
-        }
-    },
     plugins: [
         new CaseSensitivePlugin(),
         new CleanPlugin(['./dist'], {
@@ -94,11 +81,12 @@ const config = module.exports = {
             filename: path.resolve('./dist/index.html'),
             inject: true,
         }),
-        new BundleAnalyzerPlugin({
+        new BundleAnalyzerSunburstPlugin({
             analyzerMode: 'static',
-            openAnalyzer: true, //process.env.NODE_ENV === 'production',
-            generateStatsFile: true, //process.env.NODE_ENV === 'production',
+            openAnalyzer: true,//process.env.NODE_ENV === 'production',
+            generateStatsFile: true,//process.env.NODE_ENV === 'production',
             defaultSizes: 'gzip',
+            reportType: 'treemap',
             reportFilename: path.resolve('./dist/stats.html'),
             statsFilename: path.resolve('./dist/stats.json'),
         }),
