@@ -5,7 +5,7 @@ const CaseSensitivePlugin = require('case-sensitive-paths-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
-const BundleAnalyzerSunburstPlugin = require('webpack-bundle-analyzer-sunburst').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const NotifierPlugin = require('webpack-notifier');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
@@ -75,20 +75,18 @@ const config = module.exports = {
             root: path.resolve('./'),
             verbose: true
         }),
+        new webpack.EnvironmentPlugin(['NODE_ENV']),
         new HtmlPlugin({
             title: 'title',
             template: path.resolve('./app/index.html'),
             filename: path.resolve('./dist/index.html'),
             inject: true,
         }),
-        new BundleAnalyzerSunburstPlugin({
+        new BundleAnalyzerPlugin({
             analyzerMode: 'static',
-            openAnalyzer: true,//process.env.NODE_ENV === 'production',
-            generateStatsFile: true,//process.env.NODE_ENV === 'production',
+            openAnalyzer: process.env.NODE_ENV === 'production',
             defaultSizes: 'gzip',
-            reportType: 'treemap',
             reportFilename: path.resolve('./dist/stats.html'),
-            statsFilename: path.resolve('./dist/stats.json'),
         }),
         new NotifierPlugin({
             title: pkg.name,
@@ -101,10 +99,10 @@ const config = module.exports = {
 };
 
 if(process.env.NODE_ENV === 'development') {
-    // config.devtool = 'cheap-module-eval-sourcemap';
+    config.devtool = 'eval-sourcemap';
 }
 else {
-    // config.devtool = 'cheap-module-sourcemap';
+    config.devtool = 'sourcemap';
     config.plugins = [
         ...config.plugins,
         new CompressionPlugin(),

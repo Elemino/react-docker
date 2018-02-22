@@ -20,13 +20,10 @@ import userAgent from 'koa-useragent';
 import Router from 'koa-router';
 import scheduler from 'node-schedule';
 
-const router = Router();
-const redis = null;// pkg.redis ? require('./api/redis') : null;
-
-import APIs  from './api';
-import jobs from './api/jobs';
+import APIs from './api';
 
 const app = new koa();
+const router = Router();
 
 app.use(cors());
 app.use(compress());
@@ -35,9 +32,9 @@ app.use(json({ pretty: true, spaces: 4 }));
 app.use(body({ formLimit: '1mb', jsonLimit: '1mb', strict: false, multipart: true }));
 app.use(userAgent);
 
-if(redis) {
+if(APIs.redis) {
     app.use(rateLimit({
-        db: redis,
+        db: APIs.redis,
         duration: 60000,
         max: 500,
         id: ctx => ctx.ip,
@@ -58,7 +55,7 @@ app.use(async (ctx, next) => {
     try {
         await next();
     }
-    catch(error) {
+    catch (error) {
         if (error.status === 401) {
             ctx.status = 401;
             ctx.set('WWW-Authenticate', 'Basic');
@@ -93,16 +90,15 @@ router.all(['/dist/*', '/assets/*'], async ctx => {
 const bundles = pkg.bundles.filter(bundle => bundle.baseRoute).sort((a, b) => a.baseRoute.length <= b.baseRoute.length);
 
 for(const bundle of bundles) {
-    const { name, baseRoute, htmlOutputFilename, noIndex, prerender, ttl, identifier, secret } = bundle;
+    const { name, baseRoute, identifier, secret } = bundle;
 
     if(identifier && secret)
         app.use(mount(baseRoute, auth({ name: identifier, pass: secret })));
 
     router.all([baseRoute, `${baseRoute !== '/' ? baseRoute : ''}/*`], async ctx => {
-        const { protocol, host, url: pathname, userAgent: { isBot } } = ctx;
-        const url = `${protocol}://${host}${pathname}`;
-
-        await send(ctx, htmlOutputFilename || `./dist/${name}/index.html`, { root: path.dirname('.'), setHeaders: cacheHeaders });
+        // const { protocol, host, url: pathname, userAgent: { isBot } } = ctx;
+        // const url = `${protocol}://${host}${pathname}`;
+        await send(ctx, `./dist/${name}/index.html`, { root: path.dirname('.'), setHeaders: cacheHeaders });
     });
 }
 
@@ -114,5 +110,6 @@ if(pkg.ssl)
     http.createServer({ key: fs.readFileSync(pkg.ssl.key), cert: fs.readFileSync(pkg.ssl.cert) }, app.callback()).listen(host.httpsPort || 443);
 
 if(process.env.pm_id === '0')
-    for(const time in jobs)
-        scheduler.scheduleJob(time, jobs[time]);
+    if(APIs.jobs)
+        for(const time in APIs.jobs)
+            scheduler.scheduleJob(time, APIs.jobs[time]);
