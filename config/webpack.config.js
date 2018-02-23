@@ -3,7 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 const CaseSensitivePlugin = require('case-sensitive-paths-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
-const HtmlPlugin = require('html-webpack-plugin');
+const HtmlPlugin = require('html5-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const NotifierPlugin = require('webpack-notifier');
@@ -17,6 +17,7 @@ const config = module.exports = {
     output: {
         path: path.resolve('./dist'),
         filename: '[name].js',
+        publicPath: '/dist',
     },
     module: {
         rules: [{
@@ -77,10 +78,10 @@ const config = module.exports = {
         }),
         new webpack.EnvironmentPlugin(['NODE_ENV']),
         new HtmlPlugin({
-            title: 'title',
-            template: path.resolve('./app/index.html'),
-            filename: path.resolve('./dist/index.html'),
-            inject: true,
+            title: pkg.name,
+            input: path.resolve('./app/index.html'),
+            output: path.resolve('./dist/index.html'),
+            minify: process.env.NODE_ENV !== 'development',
         }),
         new BundleAnalyzerPlugin({
             analyzerMode: 'static',
