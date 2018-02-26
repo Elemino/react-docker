@@ -24,6 +24,25 @@
         "ios_saf 11.3",
         "edge 17"
     ],
+    "bundles": [
+        {
+            "name": "visitor",
+            "baseRoute": "/",
+            "js": "./apps/visitor/index.js",
+            "html": "./apps/index.html",
+            "favicon": "./logo.png",
+            "manifest": {
+                "name": "Yarsk",
+                "short_name": "yrsk",
+                "description": "Yet Another React Starter Kit",
+                "start_url": ".",
+                "theme_color": "#000",
+                "background_color": "#fff",
+                "orientation": "portrait",
+                "display": "standalone"
+            }
+        }
+    ],
     "host": {
         "development": {
             "url": "http://localhost:8080",
@@ -41,14 +60,9 @@
         "host": "127.0.0.1",
         "port": 6379
     },
-    "bundles": [
-        {
-            "name": "",
-            "baseRoute": "/",
-            "js": "./app/index.js",
-            "html": "./app/index.html"
-        }
-    ],
+    "google": {
+        "analyticsTrackingID": "XYZ"
+    },
     "eslintConfig": {
         "parser": "babel-eslint",
         "parserOptions": {
@@ -140,28 +154,45 @@
         "@babel/polyfill": "^7.0.0-beta.40",
         "@babel/preset-env": "^7.0.0-beta.40",
         "@babel/preset-react": "^7.0.0-beta.40",
-        "@babel/preset-stage-0": "7.0.0-beta.40",
+        "@babel/preset-stage-0": "7.0.0-beta.36",
         "babel-eslint": "^8.2.1",
         "babel-jest": "^22.4.1",
-        "babel-loader": "^8.0.0-beta.0",
+        "babel-loader": "^8.0.0-beta.1",
         "case-sensitive-paths-webpack-plugin": "^2.1.1",
+        "classnames": "^2.2.5",
         "clean-webpack-plugin": "^0.1.18",
-        "compression-webpack-plugin": "^1.1.7",
+        "compression-webpack-plugin": "^1.1.8",
         "eslint": "^4.18.0",
-        "eslint-loader": "^1.9.0",
+        "eslint-loader": "^2.0.0",
         "eslint-plugin-import": "^2.9.0",
         "eslint-plugin-jest": "^21.12.2",
         "eslint-plugin-react": "^7.7.0",
         "file-loader": "^1.1.9",
-        "html5-webpack-plugin": "^1.0.1",
+        "graphjql": "^1.1.4",
+        "history": "^4.7.2",
+        "html5-webpack-plugin": "^1.0.5",
         "img-loader": "^2.0.1",
         "jest": "^22.4.2",
+        "jss-reset": "^1.0.2",
         "lodash-es": "^4.17.5",
+        "material-ui": "1.0.0-beta.34",
         "open-browser-webpack-plugin": "^0.0.5",
+        "react": "^16.2.0",
+        "react-dom": "^16.2.0",
+        "react-ga": "^2.4.1",
+        "react-helmet": "^5.2.0",
+        "react-jss": "^8.3.3",
+        "react-redux": "^5.0.7",
+        "react-router-dom": "^4.2.2",
+        "react-router-redux": "^5.0.0-alpha.6",
+        "react-router-transition": "^1.2.1",
+        "reax-helpers": "^1.2.5",
+        "typeface-roboto": "^0.0.54",
+        "uglifyjs-webpack-plugin": "^1.2.2",
         "url-loader": "^0.6.2",
-        "webpack": "^4.0.0-beta.2",
-        "webpack-bundle-analyzer": "^2.10.0",
-        "webpack-cli": "^2.0.6",
+        "webpack": "^4.0.0",
+        "webpack-bundle-analyzer": "^2.11.0",
+        "webpack-cli": "^2.0.9",
         "webpack-notifier": "^1.5.1"
     }
 }
