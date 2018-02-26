@@ -27,5 +27,3 @@ const app = (
 );
 
 ReactDOM.render(app, document.getElementById('app'));
-
-alert(yo);
