@@ -96,8 +96,6 @@ for(const bundle of bundles) {
         app.use(mount(baseRoute, auth({ name: identifier, pass: secret })));
 
     router.all([baseRoute, `${baseRoute !== '/' ? baseRoute : ''}/*`], async ctx => {
-        // const { protocol, host, url: pathname, userAgent: { isBot } } = ctx;
-        // const url = `${protocol}://${host}${pathname}`;
         await send(ctx, `./dist/${name}/index.html`, { root: path.dirname('.'), setHeaders: cacheHeaders });
     });
 }

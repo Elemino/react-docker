@@ -10,7 +10,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const NotifierPlugin = require('webpack-notifier');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
-module.exports = pkg.bundles.map(({ name, js, html, favicon, manifest }) => {
+module.exports = pkg.bundles.map(({ name, baseRoute, js, html, favicon, manifest }) => {
     const config = {
         profile: true,
         entry: {
@@ -24,7 +24,7 @@ module.exports = pkg.bundles.map(({ name, js, html, favicon, manifest }) => {
         module: {
             rules: [{
                 test: /\.(js|jsx|mjs)$/i,
-                exclude: /node_modules\/(?!(graphjql|reax-helpers)\/).*/,
+                exclude: /node_modules\/(?!(graphjql|reax-helpers|reax-form|reax-cms|muicons)\/).*/,
                 use: [{
                     loader: 'babel-loader',
                     options: {
@@ -74,8 +74,8 @@ module.exports = pkg.bundles.map(({ name, js, html, favicon, manifest }) => {
         },
         plugins: [
             new CaseSensitivePlugin(),
-            new CleanPlugin(['./dist'], {
-                root: path.resolve('./'),
+            new CleanPlugin([name], {
+                root: path.resolve('./dist'),
                 verbose: true
             }),
             new webpack.EnvironmentPlugin(['NODE_ENV']),
@@ -96,7 +96,7 @@ module.exports = pkg.bundles.map(({ name, js, html, favicon, manifest }) => {
                 alwaysNotify: true,
             }),
             new OpenBrowserPlugin({
-                url: 'http://localhost:8080/',
+                url: 'http://localhost:8080' + baseRoute,
             }),
         ],
     };
