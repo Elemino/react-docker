@@ -7,20 +7,11 @@ import Router, { history } from './router';
 
 const development = process.env.NODE_ENV == 'development';
 
-const persistConfig = {
-    key: 'mui',
-    keyPrefix: 'mui/',
-    whitelist: ['main'],
-    blacklist: ['routing'],
-};
-
-const { store, persistor } = createStore({ reducers, history, persistConfig, verbose: development, loggerCollapsed: true, loggerFilter: ['/persist'] });
-
-window.persistor = persistor;
+const store = createStore({ reducers, history, verbose: development, loggerCollapsed: true, loggerFilter: ['/persist'] });
 
 const app = (
     <EmitterProvider>
-        <App store={store} persistor={persistor}>
+        <App store={store}>
             <Router />
         </App>
     </EmitterProvider>
