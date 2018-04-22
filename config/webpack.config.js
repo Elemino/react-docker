@@ -80,6 +80,12 @@ module.exports = pkg.bundles.map(({ name, baseRoute, js, html, favicon, manifest
                 verbose: true
             }),
             new webpack.EnvironmentPlugin(['NODE_ENV']),
+        ],
+    };
+
+    if(html) {
+        config.plugins = [
+            ...config.plugins,
             new Html5Plugin({
                 title: pkg.name,
                 input: path.resolve(html),
@@ -87,8 +93,8 @@ module.exports = pkg.bundles.map(({ name, baseRoute, js, html, favicon, manifest
                 favicon: path.resolve(favicon),
                 manifest: manifest,
             }),
-        ],
-    };
+        ];
+    }
 
     if(process.env.NODE_ENV === 'development') {
         config.devtool = 'eval-sourcemap';
