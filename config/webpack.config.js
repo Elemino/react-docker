@@ -87,11 +87,14 @@ module.exports = pkg.bundles.map(({ name, baseRoute, js, html, favicon, manifest
                 favicon: path.resolve(favicon),
                 manifest: manifest,
             }),
-            new BundleAnalyzerPlugin({
-                analyzerMode: 'static',
-                openAnalyzer: process.env.NODE_ENV === 'production',
-                defaultSizes: 'gzip',
-            }),
+        ],
+    };
+
+    if(process.env.NODE_ENV === 'development') {
+        config.devtool = 'eval-sourcemap';
+
+        config.plugins = [
+            ...config.plugins,
             new NotifierPlugin({
                 title: pkg.name,
                 alwaysNotify: true,
@@ -99,11 +102,7 @@ module.exports = pkg.bundles.map(({ name, baseRoute, js, html, favicon, manifest
             new OpenBrowserPlugin({
                 url: 'http://localhost:8080' + baseRoute,
             }),
-        ],
-    };
-
-    if(process.env.NODE_ENV === 'development') {
-        config.devtool = 'eval-sourcemap';
+        ];
     }
     else {
         config.devtool = 'source-map';
@@ -120,9 +119,15 @@ module.exports = pkg.bundles.map(({ name, baseRoute, js, html, favicon, manifest
                 }),
             ],
         };
+
         config.plugins = [
             ...config.plugins,
             new CompressionPlugin(),
+            new BundleAnalyzerPlugin({
+                analyzerMode: 'static',
+                openAnalyzer: process.env.NODE_ENV === 'production',
+                defaultSizes: 'gzip',
+            }),
         ];
     }
 
