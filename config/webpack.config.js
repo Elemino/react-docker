@@ -43,8 +43,9 @@ module.exports = pkg.bundles.map(({ name, baseRoute, js, html, favicon, manifest
             },{
                 test: /\.(jpg|jpeg|png|gif|svg)$/i,
                 use: [{
-                    loader: 'file-loader',
+                    loader: 'url-loader',
                     options: {
+                        limit: 8192,
                         name: '/assets/images/[name].[ext]?hash=[hash]',
                     },
                 },{
