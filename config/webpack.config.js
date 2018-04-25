@@ -32,6 +32,13 @@ module.exports = pkg.bundles.map(({ name, baseRoute, js, html, favicon, manifest
                     },
                 }],
             },{
+                test: /\.(css)$/,
+                use: [{
+                    loader: 'style-loader',
+                },{
+                    loader: 'css-loader',
+                }],
+            },{
                 test: /\.(woff|woff2|ttf|eot)$/i,
                 use: [{
                     loader: 'url-loader',

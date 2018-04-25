@@ -107,7 +107,12 @@
                     "debug": true
                 }
             ],
-            "@babel/preset-stage-0",
+            [
+                "@babel/preset-stage-0",
+                {
+                    "decoratorsLegacy": true
+                }
+            ],
             "@babel/preset-react"
         ]
     },
@@ -149,10 +154,10 @@
         "yargs": "^11.0.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.0.0-beta.44",
-        "@babel/polyfill": "^7.0.0-beta.44",
-        "@babel/preset-env": "^7.0.0-beta.44",
-        "@babel/preset-react": "^7.0.0-beta.44",
+        "@babel/core": "7.0.0-beta.43",
+        "@babel/polyfill": "7.0.0-beta.43",
+        "@babel/preset-env": "7.0.0-beta.43",
+        "@babel/preset-react": "7.0.0-beta.43",
         "@babel/preset-stage-0": "7.0.0-beta.36",
         "babel-eslint": "^8.2.1",
         "babel-jest": "^22.4.3",
@@ -161,6 +166,7 @@
         "classnames": "^2.2.5",
         "clean-webpack-plugin": "^0.1.19",
         "compression-webpack-plugin": "^1.1.11",
+        "css-loader": "^0.28.11",
         "eslint": "^4.19.1",
         "eslint-loader": "^2.0.0",
         "eslint-plugin-jest": "^21.15.0",
@@ -173,9 +179,9 @@
         "jest": "^22.4.3",
         "jss-reset": "^1.0.2",
         "lodash-es": "^4.17.8",
-        "material-ui": "1.0.0-beta.34",
+        "material-ui": "^1.0.0-beta.43",
         "open-browser-webpack-plugin": "^0.0.5",
-        "react": "16.2.0",
+        "react": "^16.2.0",
         "react-dom": "^16.3.0",
         "react-ga": "^2.4.1",
         "react-helmet": "^5.2.0",
@@ -185,6 +191,7 @@
         "react-router-redux": "^5.0.0-alpha.6",
         "react-router-transition": "^1.2.1",
         "reax-helpers": "^1.2.6",
+        "style-loader": "^0.21.0",
         "typeface-roboto": "^0.0.54",
         "uglifyjs-webpack-plugin": "^1.2.3",
         "url-loader": "^1.0.1",

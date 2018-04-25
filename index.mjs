@@ -79,7 +79,7 @@ for(const mountPoint in APIs) {
 }
 
 const cacheHeaders = (res, path, stats) => {
-    res.setHeader('Cache-Control', 'max-age=' + 3600 * 24 * 7);
+    res.setHeader('Cache-Control', 'must-revalidate, max-age=' + 3600 * 24 * 7);
 };
 
 router.all(['/dist/*', '/assets/*'], async ctx => {
