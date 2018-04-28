@@ -15,7 +15,8 @@
         "build:stg": "NODE_ENV=staging webpack --config ./config/webpack.config.js --progress --mode production",
         "build:prod": "NODE_ENV=production webpack --config ./config/webpack.config.js --progress --mode production",
         "test": "jest --no-cache --coverage",
-        "test:watch": "jest --watchAll --no-cache --coverage"
+        "test:watch": "jest --watchAll --no-cache --coverage",
+        "codebase:size": "imac:yarsk damz$ find . -name '*.js' -not -path './node_modules/**' -not -path './dist/**' | xargs wc -l"
     },
     "browserslist": [
         "chrome 64",
@@ -45,10 +46,15 @@
     ],
     "host": {
         "development": {
-            "url": "http://localhost:8080",
+            "url": "https://localhost:8080",
             "hostname": "localhost",
-            "httpPort": 8080
+            "httpPort": 8080,
+            "httpsPort": 9090
         }
+    },
+    "ssl": {
+        "cert": "./ssl/localhost.cert",
+        "key": "./ssl/localhost.key"
     },
     "database": {
         "hostname": "localhost",

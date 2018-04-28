@@ -3,6 +3,7 @@ import pkg from './package';
 import path from 'path';
 import console from 'better-console';
 import fs from 'fs';
+import http1 from 'http';
 import http2 from 'http2';
 import koa from 'koa';
 import cors from 'kcors';
@@ -101,9 +102,9 @@ for(const bundle of bundles) {
 
 app.use(router.routes());
 
-if(!pkg.ssl)
-    http2.createServer(app.callback()).listen(host.httpPort || 80);
-else
+http1.createServer(app.callback()).listen(host.httpPort || 80);
+
+if(pkg.ssl)
     http2.createSecureServer({ key: fs.readFileSync(pkg.ssl.key), cert: fs.readFileSync(pkg.ssl.cert) }, app.callback()).listen(host.httpsPort || 443);
 
 if(process.env.pm_id === '0')
