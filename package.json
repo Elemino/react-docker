@@ -16,7 +16,7 @@
         "build:prod": "NODE_ENV=production webpack --config ./config/webpack.config.js --progress --mode production",
         "test": "jest --no-cache --coverage",
         "test:watch": "jest --watchAll --no-cache --coverage",
-        "codebase:size": "imac:yarsk damz$ find . -name '*.js' -not -path './node_modules/**' -not -path './dist/**' | xargs wc -l"
+        "codebase:size": "find . -name '*.js' -not -path './node_modules/**' -not -path './dist/**' | xargs wc -l"
     },
     "browserslist": [
         "chrome 64",
