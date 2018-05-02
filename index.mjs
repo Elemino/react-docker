@@ -3,8 +3,8 @@ import pkg from './package';
 import path from 'path';
 import console from 'better-console';
 import fs from 'fs';
-import http from 'http';
-import https from 'https';
+import http1 from 'http';
+import http2 from 'http2';
 import koa from 'koa';
 import cors from 'kcors';
 import compress from 'koa-compress';
@@ -79,7 +79,7 @@ for(const mountPoint in APIs) {
 }
 
 const cacheHeaders = (res, path, stats) => {
-    res.setHeader('Cache-Control', 'max-age=' + 3600 * 24 * 7);
+    res.setHeader('Cache-Control', 'must-revalidate, max-age=' + 3600 * 24 * 7);
 };
 
 router.all(['/dist/*', '/assets/*'], async ctx => {
@@ -102,10 +102,10 @@ for(const bundle of bundles) {
 
 app.use(router.routes());
 
-http.createServer(app.callback()).listen(host.httpPort || 80);
+http1.createServer(app.callback()).listen(host.httpPort || 80);
 
 if(pkg.ssl)
-    http.createServer({ key: fs.readFileSync(pkg.ssl.key), cert: fs.readFileSync(pkg.ssl.cert) }, app.callback()).listen(host.httpsPort || 443);
+    http2.createSecureServer({ key: fs.readFileSync(pkg.ssl.key), cert: fs.readFileSync(pkg.ssl.cert) }, app.callback()).listen(host.httpsPort || 443);
 
 if(process.env.pm_id === '0')
     if(APIs.jobs)

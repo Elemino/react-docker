@@ -10,6 +10,8 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const NotifierPlugin = require('webpack-notifier');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
+const host = pkg.host[process.env.NODE_ENV];
+
 module.exports = pkg.bundles.map(({ name, baseRoute, js, html, favicon, manifest }) => {
     const config = {
         profile: true,
@@ -32,6 +34,13 @@ module.exports = pkg.bundles.map(({ name, baseRoute, js, html, favicon, manifest
                     },
                 }],
             },{
+                test: /\.(css)$/,
+                use: [{
+                    loader: 'style-loader',
+                },{
+                    loader: 'css-loader',
+                }],
+            },{
                 test: /\.(woff|woff2|ttf|eot)$/i,
                 use: [{
                     loader: 'url-loader',
@@ -43,8 +52,9 @@ module.exports = pkg.bundles.map(({ name, baseRoute, js, html, favicon, manifest
             },{
                 test: /\.(jpg|jpeg|png|gif|svg)$/i,
                 use: [{
-                    loader: 'file-loader',
+                    loader: 'url-loader',
                     options: {
+                        limit: 8192,
                         name: '/assets/images/[name].[ext]?hash=[hash]',
                     },
                 },{
@@ -79,6 +89,12 @@ module.exports = pkg.bundles.map(({ name, baseRoute, js, html, favicon, manifest
                 verbose: true
             }),
             new webpack.EnvironmentPlugin(['NODE_ENV']),
+        ],
+    };
+
+    if(html) {
+        config.plugins = [
+            ...config.plugins,
             new Html5Plugin({
                 title: pkg.name,
                 input: path.resolve(html),
@@ -86,23 +102,22 @@ module.exports = pkg.bundles.map(({ name, baseRoute, js, html, favicon, manifest
                 favicon: path.resolve(favicon),
                 manifest: manifest,
             }),
-            new BundleAnalyzerPlugin({
-                analyzerMode: 'static',
-                openAnalyzer: process.env.NODE_ENV === 'production',
-                defaultSizes: 'gzip',
-            }),
+        ];
+    }
+
+    if(process.env.NODE_ENV === 'development') {
+        config.devtool = 'eval-sourcemap';
+
+        config.plugins = [
+            ...config.plugins,
             new NotifierPlugin({
                 title: pkg.name,
                 alwaysNotify: true,
             }),
             new OpenBrowserPlugin({
-                url: 'http://localhost:8080' + baseRoute,
+                url: host.url + baseRoute,
             }),
-        ],
-    };
-
-    if(process.env.NODE_ENV === 'development') {
-        config.devtool = 'eval-sourcemap';
+        ];
     }
     else {
         config.devtool = 'source-map';
@@ -119,9 +134,15 @@ module.exports = pkg.bundles.map(({ name, baseRoute, js, html, favicon, manifest
                 }),
             ],
         };
+
         config.plugins = [
             ...config.plugins,
             new CompressionPlugin(),
+            new BundleAnalyzerPlugin({
+                analyzerMode: 'static',
+                openAnalyzer: process.env.NODE_ENV === 'production',
+                defaultSizes: 'gzip',
+            }),
         ];
     }
 
