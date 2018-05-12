@@ -10,6 +10,8 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const NotifierPlugin = require('webpack-notifier');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
+const host = pkg.host[process.env.NODE_ENV];
+
 module.exports = pkg.bundles.map(({ name, baseRoute, js, html, favicon, manifest }) => {
     const config = {
         profile: true,
@@ -114,7 +116,7 @@ module.exports = pkg.bundles.map(({ name, baseRoute, js, html, favicon, manifest
                 alwaysNotify: true,
             }),
             new OpenBrowserPlugin({
-                url: 'http://localhost:8080' + baseRoute,
+                url: host.url + baseRoute,
             }),
         ];
     }
