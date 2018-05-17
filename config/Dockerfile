@@ -4,8 +4,12 @@ FROM alpine:3.7
 # nodejs v10+ (shipping npm and yarn too)
 FROM mhart/alpine-node:10.1
 
+# build-arg NODE_ENV => env NODE_ENV
+ARG NODE_ENV
+ENV NODE_ENV $NODE_ENV
+
 # install essential packages
-RUN apk add --no-cache --update openssh bash vim jq tzdata
+RUN apk add --no-cache --update openssh bash vim jq curl tzdata
 
 # install PM2 (process manager)
 RUN npm install -g pm2
@@ -27,10 +31,10 @@ WORKDIR /var/project
 RUN yarn install --production=false --ignore-engines
 
 # production build must be processed before pushing the image, development watch filesystem changes and build incrementally
-# RUN yarn build:prod
+RUN yarn build:prod
 
 # expose ports
-EXPOSE 9091
-EXPOSE 9092
+EXPOSE 80
+EXPOSE 443
 
 CMD ["yarn", "serve:prod"]

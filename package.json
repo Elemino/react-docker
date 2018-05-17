@@ -6,6 +6,7 @@
     "author": "Damiano Barbati <damiano.barbati@gmail.com> (http://github.com/damianobarbati)",
     "main": "index.js",
     "scripts": {
+        "ciao": "echo $NODE_ENV",
         "codebase:size": "find . -name '*.js' -not -path './node_modules/**' -not -path './dist/**' | xargs wc -l",
         "jslint": "eslint **/*.js --ignore-path .gitignore",
         "unserve": "pm2 delete ./config/pm2.config.js",
@@ -15,12 +16,12 @@
         "build:dev": "NODE_ENV=development webpack --config ./config/webpack.config.js --progress --watch --mode development",
         "build:stg": "NODE_ENV=staging webpack --config ./config/webpack.config.js --progress --mode production",
         "build:prod": "NODE_ENV=production webpack --config ./config/webpack.config.js --progress --mode production",
-        "docker:build": "docker build --no-cache --tag $npm_package_name --build-arg NODE_ENV=$NODE_ENV --file ./config/Dockerfile ./",
-        "docker:run": "docker stop $npm_package_name; docker container prune -f; docker run --name $npm_package_name --tty --interactive --publish 9091:9091 --publish 9092:9092 --env project_name=$npm_package_name --detach $npm_package_name:latest",
+        "docker:build": "docker build --no-cache --tag $npm_package_name --build-arg NODE_ENV=production --file ./config/Dockerfile ./",
+        "docker:run": "docker stop $npm_package_name; docker container prune -f; docker run --name $npm_package_name --tty --interactive --publish 8080:8080 --publish 9090:9090 --detach --restart=unless-stopped $npm_package_name:latest",
         "docker:bash": "docker exec --tty --interactive $npm_package_name /bin/bash",
         "docker:dry:run": "yarn docker:build && yarn docker:run && yarn docker:bash",
         "docker:push": "docker push $npm_package_name:latest",
-        "docker:deploy": "ssh root@$npm_package_host_production_hostname \"docker rm -f $npm_package_name && docker pull $npm_package_name && docker run --name $npm_package_name --tty --interactive --publish 9091:9091 --publish 9092:9092 --env project_name=$npm_package_name --detach $npm_package_name:latest\"",
+        "docker:deploy": "ssh root@$npm_package_host_production_hostname \"docker rm -f $npm_package_name && docker pull $npm_package_name && docker run --name $npm_package_name --tty --interactive --publish 8080:8080 --publish 9090:9090 --env project_name=$npm_package_name --detach $npm_package_name:latest\"",
         "test": "jest --no-cache --coverage",
         "test:watch": "jest --watchAll --no-cache --coverage"
     },
@@ -39,9 +40,9 @@
         {
             "name": "visitor",
             "baseRoute": "/",
-            "js": "./apps/visitor/index.js",
-            "html": "./apps/index.html",
-            "favicon": "./logo.png",
+            "js": "./app/index.js",
+            "html": "./app/index.html",
+            "favicon": "./app/logo.png",
             "manifest": {
                 "name": "Yarsk",
                 "short_name": "yrsk",
@@ -56,10 +57,14 @@
     ],
     "host": {
         "development": {
-            "url": "https://localhost:8080",
+            "url": "https://localhost:9090",
             "hostname": "localhost",
             "httpPort": 8080,
             "httpsPort": 9090
+        },
+        "production": {
+            "url": "https://localhost",
+            "hostname": "localhost"
         }
     },
     "ssl": {
@@ -146,6 +151,7 @@
         "axios": "^0.18.0",
         "better-console": "^1.0.1",
         "binize": "^1.0.4",
+        "fs": "^0.0.1-security",
         "ioredis": "^3.2.2",
         "jws": "^3.1.4",
         "kcors": "^2.2.1",
@@ -167,6 +173,8 @@
         "nodemailer": "^4.6.4",
         "pg": "^7.4.1",
         "sleep-promise": "^2.0.0",
+        "string-replace-loader": "^2.1.1",
+        "ws": "^5.1.1",
         "yargs": "^11.0.0"
     },
     "devDependencies": {
@@ -206,6 +214,7 @@
         "react-router-dom": "^4.2.2",
         "react-router-redux": "^5.0.0-alpha.6",
         "react-router-transition": "^1.2.1",
+        "react-tiny-virtual-list": "^2.1.4",
         "reax-helpers": "^1.2.6",
         "style-loader": "^0.21.0",
         "uglifyjs-webpack-plugin": "^1.2.3",

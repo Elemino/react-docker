@@ -1,7 +1,7 @@
 import pkg from './package';
 
-import path from 'path';
 import console from 'better-console';
+import path from 'path';
 import fs from 'fs';
 import http1 from 'http';
 import http2 from 'http2';
@@ -100,10 +100,15 @@ for(const bundle of bundles) {
 
 app.use(router.routes());
 
-http1.createServer(app.callback()).listen(host.httpPort || 80);
-http2.createSecureServer({ key: fs.readFileSync(pkg.ssl.key), cert: fs.readFileSync(pkg.ssl.cert) }, app.callback()).listen(host.httpsPort || 443);
+const http1Server = http1.createServer(app.callback()).listen(host.httpPort || 80);
+const http2Server = http2.createSecureServer({ key: fs.readFileSync(pkg.ssl.key), cert: fs.readFileSync(pkg.ssl.cert) }, app.callback()).listen(host.httpsPort || 443);
 
 if(process.env.pm_id === '0')
     if(APIs.jobs)
         for(const time in APIs.jobs)
             scheduler.scheduleJob(time, APIs.jobs[time]);
+
+console.log('log');
+console.error('error');
+console.info('info');
+console.warn('warn');

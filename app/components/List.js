@@ -1,4 +1,4 @@
-import { name } from '../../../package';
+import { name } from '../../package';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -19,24 +19,24 @@ import Button from 'material-ui/Button';
     },
 }))
 @connect((state, props) => ({ }))
-export default class Home extends React.Component {
+export default class List extends React.Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
         dispatch: PropTypes.func.isRequired,
     };
 
     componentDidMount = () => {
-        console.log('mounted home');
+        console.log('mounted list');
     };
 
     componentWillUnmount = () => {
-        console.log('unmounting home');
+        console.log('unmounting list');
     };
 
     render = () => {
         const { classes } = this.props;
 
-        console.log('rendering home');
+        console.log('rendering list');
 
         return (
             <React.Fragment>
@@ -48,8 +48,8 @@ export default class Home extends React.Component {
                 </Helmet>
 
                 <div className={classes.root}>
-                    <Typography component={'h1'} gutterBottom={true}>Home</Typography>
-                    <Button size={'small'} variant={'raised'} component={Link} to={'/list'}>Move to list</Button>
+                    <Typography component={'h1'} gutterBottom={true}>List</Typography>
+                    <Button size={'small'} variant={'raised'} component={Link} to={'/'}>Move to home</Button>
                 </div>
             </React.Fragment>
         );

@@ -8,7 +8,7 @@ import cx from 'classnames';
 import { withStyles } from 'material-ui/styles';
 
 import GA from 'react-ga';
-import { google } from '../../package';
+import { google } from '../package';
 
 import { MuiThemeProvider } from 'material-ui/styles';
 import theme from './theme';
@@ -16,6 +16,7 @@ import theme from './theme';
 import Layout from './components/Layout';
 import Home from './components/Home';
 import List from './components/List';
+import Table from './components/Table';
 
 export const history = createHistory({ basename: '/' });
 
@@ -35,6 +36,7 @@ export default class Router extends React.Component {
                     <Layout>
                         <Route exact={true} path={'/'} component={Home} />
                         <Route exact={true} path={'/list'} component={List} />
+                        <Route exact={true} path={'/table'} component={Table} />
                     </Layout>
                 </MuiThemeProvider>
             </ConnectedRouter>
