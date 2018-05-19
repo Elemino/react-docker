@@ -4,14 +4,8 @@ import createHistory from 'history/createBrowserHistory';
 import { ConnectedRouter } from 'react-router-redux';
 import { Switch, Route } from 'react-router-dom';
 
-import cx from 'classnames';
-import { withStyles } from 'material-ui/styles';
-
 import GA from 'react-ga';
 import { google } from '../package';
-
-import { MuiThemeProvider } from 'material-ui/styles';
-import theme from './theme';
 
 import Layout from './components/Layout';
 import Home from './components/Home';
@@ -32,13 +26,11 @@ export default class Router extends React.Component {
     render = () => {
         return (
             <ConnectedRouter history={history}>
-                <MuiThemeProvider theme={theme}>
-                    <Layout>
-                        <Route exact={true} path={'/'} component={Home} />
-                        <Route exact={true} path={'/list'} component={List} />
-                        <Route exact={true} path={'/table'} component={Table} />
-                    </Layout>
-                </MuiThemeProvider>
+                <Layout>
+                    <Route exact={true} path={'/'} component={Home} />
+                    <Route exact={true} path={'/list'} component={List} />
+                    <Route exact={true} path={'/table'} component={Table} />
+                </Layout>
             </ConnectedRouter>
         );
     }

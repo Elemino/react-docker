@@ -9,11 +9,11 @@ import VirtualList from 'react-tiny-virtual-list';
 import { range } from 'lodash-es';
 
 import cx from 'classnames';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 
-import Grid from 'material-ui/Grid';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
 const theadHeight = 50;
 const tbodyHeight = 250;

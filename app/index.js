@@ -1,13 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, EmitterProvider, App } from 'reax-helpers';
+import { createStore, App } from 'reax-helpers';
+
+import { jss } from 'react-jss';
+import reset from 'jss-reset';
 
 import * as reducers from './reducers';
 import Router, { history } from './router';
 
-const development = process.env.NODE_ENV == 'development';
+jss.createStyleSheet(reset).attach();
+jss.createStyleSheet({
+    '@global html, body': {
+        fontFamily: 'Verdana',
+    },
+}).attach();
 
-const store = createStore({ reducers, history, verbose: development, loggerCollapsed: true, loggerFilter: ['/persist'] });
+const store = createStore({ reducers, history, verbose: process.env.NODE_ENV == 'development', loggerCollapsed: true, loggerFilter: ['/persist'] });
 
 const app = (
     <React.StrictMode>

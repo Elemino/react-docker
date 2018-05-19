@@ -7,11 +7,11 @@ import { Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
 
 import cx from 'classnames';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 
-import Grid from 'material-ui/Grid';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
 @withStyles(theme => ({
     root: {
