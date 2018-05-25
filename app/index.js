@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, App } from 'reax-helpers';
+// import { createStore, App } from 'reax-helpers';
+import createStore from 'reax-helpers/src/createStore';
+import App from 'reax-helpers/src/App';
 
 import { jss } from 'react-jss';
 import reset from 'jss-reset';

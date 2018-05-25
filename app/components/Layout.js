@@ -9,7 +9,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Nav from './Nav';
 
 @withRouter
-@withStyles(theme => ({}))
+@withStyles(theme => ({ }))
 @connect((state, props) => ({}))
 export default class Layout extends React.Component {
     static propTypes = {

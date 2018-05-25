@@ -6,8 +6,7 @@
     "author": "Damiano Barbati <damiano.barbati@gmail.com> (http://github.com/damianobarbati)",
     "main": "index.js",
     "scripts": {
-        "ciao": "echo $NODE_ENV",
-        "codebase:size": "find . -name '*.js' -not -path './node_modules/**' -not -path './dist/**' | xargs wc -l",
+        "codebase:size": "find -E . -regex '.*\\.(js|html|css|yml|sh)$' -not -path './node_modules/**' -not -path './dist/**' -not -path './ssl/**' | xargs wc -l",
         "jslint": "eslint **/*.js --ignore-path .gitignore",
         "unserve": "pm2 delete ./config/pm2.config.js",
         "serve:dev": "pm2-runtime start ./config/pm2.config.js --env development -i 1",
@@ -118,25 +117,6 @@
             "no-unused-vars": "off"
         }
     },
-    "babel": {
-        "presets": [
-            [
-                "@babel/preset-env",
-                {
-                    "modules": false,
-                    "useBuiltIns": "usage",
-                    "debug": true
-                }
-            ],
-            [
-                "@babel/preset-stage-0",
-                {
-                    "decoratorsLegacy": true
-                }
-            ],
-            "@babel/preset-react"
-        ]
-    },
     "jest": {
         "bail": true,
         "verbose": true,
@@ -178,11 +158,13 @@
         "yargs": "^11.0.0"
     },
     "devDependencies": {
-        "@babel/core": "7.0.0-beta.43",
-        "@babel/polyfill": "7.0.0-beta.43",
-        "@babel/preset-env": "7.0.0-beta.43",
-        "@babel/preset-react": "7.0.0-beta.43",
-        "@babel/preset-stage-0": "7.0.0-beta.36",
+        "@babel/core": "^7.0.0-beta.49",
+        "@babel/plugin-proposal-class-properties": "^7.0.0-beta.49",
+        "@babel/plugin-proposal-export-default-from": "^7.0.0-beta.49",
+        "@babel/polyfill": "^7.0.0-beta.49",
+        "@babel/preset-env": "^7.0.0-beta.49",
+        "@babel/preset-react": "^7.0.0-beta.49",
+        "@babel/preset-stage-0": "^7.0.0-beta.49",
         "@material-ui/core": "^1.0.0",
         "babel-eslint": "^8.2.1",
         "babel-jest": "^22.4.3",
