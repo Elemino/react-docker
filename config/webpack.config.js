@@ -131,6 +131,8 @@ module.exports = pkg.bundles.map(({ name, baseRoute, js, html, favicon, manifest
                         compress: {
                             inline: false,
                         },
+                        keep_fnames: true,
+                        keep_classnames: true,
                     },
                 }),
             ],

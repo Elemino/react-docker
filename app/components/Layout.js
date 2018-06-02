@@ -1,29 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 import cx from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
+import injectSheet from 'react-jss';
 
 import Nav from './Nav';
 
-@withRouter
-@withStyles(theme => ({ }))
-@connect((state, props) => ({}))
-export default class Layout extends React.Component {
+@injectSheet(theme => ({ }))
+export default class Layout extends React.PureComponent {
     static propTypes = {
         children: PropTypes.node,
         classes: PropTypes.object.isRequired,
     };
 
+    componentDidMount = () => console.log('mounted', this.constructor.name);
+
+    componentWillUnmount = () => console.log('unmounting home', this.constructor.name);
+
     render = () => {
+        console.log('rendering', this.constructor.name);
+
         const { children, classes } = this.props;
 
         return (
             <React.Fragment>
                 <Nav />
-                {children}
+                <div className={classes.dynamic}>
+                    {children}
+                </div>
             </React.Fragment>
         );
     };

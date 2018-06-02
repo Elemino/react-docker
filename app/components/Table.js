@@ -54,11 +54,9 @@ const rowHeight = 50;
         },
     },
 }))
-@connect((state, props) => ({ }))
 export default class List extends React.Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
-        dispatch: PropTypes.func.isRequired,
     };
 
     items = range(1, 100).map(value => Math.random());

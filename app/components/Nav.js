@@ -1,14 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
-import { NavLink, withRouter } from 'react-router-dom'
 
-import { withStyles } from '@material-ui/core/styles';
 import cx from 'classnames';
+import injectSheet from 'react-jss';
 
-@withRouter
-@withStyles(theme => ({
+@injectSheet(theme => ({
     root: {
         textAlign: 'center',
     },
@@ -19,6 +15,7 @@ import cx from 'classnames';
     selectedLink: {
         '& > *': {
             textDecoration: 'underline',
+            color: theme.navEntryColor,
         },
     },
     li: {
@@ -28,22 +25,28 @@ import cx from 'classnames';
         fontWeight: 'bold',
     },
 }))
-export default class Nav extends React.Component {
+export default class Nav extends React.PureComponent {
     static propTypes = {
         classes: PropTypes.object.isRequired,
     };
 
+    componentDidMount = () => console.log('mounted', this.constructor.name);
+
+    componentWillUnmount = () => console.log('unmounting home', this.constructor.name);
+
     render = () => {
+        console.log('rendering', this.constructor.name);
+
         const { classes } = this.props;
 
         return (
             <ul className={cx(classes.root)}>
-                <NavLink to={'/'} className={classes.link} activeClassName={classes.selectedLink} exact={true} strict={true}>
+                <a href={'/'} className={classes.link, cx({ [classes.selectedLink]: window.location.pathname === '/' })}>
                     <li className={cx(classes.li)}>Home</li>
-                </NavLink>
-                <NavLink to={'/list'} className={classes.link} activeClassName={classes.selectedLink} exact={true} strict={true}>
+                </a>
+                <a href={'/list'} className={classes.link, cx({ [classes.selectedLink]: window.location.pathname === '/list' })}>
                     <li className={cx(classes.li)}>List</li>
-                </NavLink>
+                </a>
             </ul>
         );
     }

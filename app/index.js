@@ -1,14 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import { createStore, App } from 'reax-helpers';
-import createStore from 'reax-helpers/src/createStore';
-import App from 'reax-helpers/src/App';
 
-import { jss } from 'react-jss';
+import { jss, ThemeProvider } from 'react-jss';
 import reset from 'jss-reset';
 
-import * as reducers from './reducers';
-import Router, { history } from './router';
+import Router from './Router';
 
 jss.createStyleSheet(reset).attach();
 jss.createStyleSheet({
@@ -17,14 +13,16 @@ jss.createStyleSheet({
     },
 }).attach();
 
-const store = createStore({ reducers, history, verbose: process.env.NODE_ENV == 'development', loggerCollapsed: true, loggerFilter: ['/persist'] });
+const theme = {
+    navEntryColor: '#a45',
+};
 
-const app = (
+const App = () => (
     <React.StrictMode>
-        <App store={store}>
+        <ThemeProvider theme={theme}>
             <Router />
-        </App>
+        </ThemeProvider>
     </React.StrictMode>
 );
 
-ReactDOM.render(app, document.getElementById('app'));
+ReactDOM.render(<App />, document.getElementById('app'));

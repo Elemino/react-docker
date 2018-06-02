@@ -9,7 +9,6 @@ import koa from 'koa';
 import cors from 'kcors';
 import compress from 'koa-compress';
 import noTrailingSlash from 'koa-no-trailing-slash';
-import rateLimit from 'koa-ratelimit';
 import json from 'koa-json';
 import body from 'koa-body';
 import send from 'koa-send';
@@ -31,15 +30,6 @@ app.use(noTrailingSlash());
 app.use(json({ pretty: true, spaces: 4 }));
 app.use(body({ formLimit: '1mb', jsonLimit: '1mb', strict: false, multipart: true }));
 app.use(userAgent);
-
-if(APIs.redis) {
-    app.use(rateLimit({
-        db: APIs.redis,
-        duration: 60000,
-        max: 500,
-        id: ctx => ctx.ip,
-    }));
-}
 
 const host = pkg.host[process.env.NODE_ENV];
 
@@ -107,8 +97,3 @@ if(process.env.pm_id === '0')
     if(APIs.jobs)
         for(const time in APIs.jobs)
             scheduler.scheduleJob(time, APIs.jobs[time]);
-
-console.log('log');
-console.error('error');
-console.info('info');
-console.warn('warn');
